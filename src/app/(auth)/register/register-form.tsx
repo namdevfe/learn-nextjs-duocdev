@@ -21,6 +21,7 @@ import { useToast } from "@/components/ui/use-toast";
 import authApiRequest from "@/apiRequest/auth";
 import { clientSessionToken } from "@/lib/http";
 import { useRouter } from "next/navigation";
+import { handleErrorApi } from "@/lib/utils";
 
 const RegisterForm = () => {
   const { toast } = useToast();
@@ -54,26 +55,30 @@ const RegisterForm = () => {
         router.push("/me");
       }
     } catch (error: any) {
-      const errors = error.payload.errors as {
-        field: string;
-        message: string;
-      }[];
+      handleErrorApi({
+        error,
+        setError: form.setError,
+      });
+      // const errors = error.payload.errors as {
+      //   field: string;
+      //   message: string;
+      // }[];
 
-      const status = error.status as number;
-      if (status === 422) {
-        errors.forEach((error) => {
-          form.setError(error.field as "email", {
-            type: "server",
-            message: error.message,
-          });
-        });
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Lỗi",
-          description: error.payload.message,
-        });
-      }
+      // const status = error.status as number;
+      // if (status === 422) {
+      //   errors.forEach((error) => {
+      //     form.setError(error.field as "email", {
+      //       type: "server",
+      //       message: error.message,
+      //     });
+      //   });
+      // } else {
+      //   toast({
+      //     variant: "destructive",
+      //     title: "Lỗi",
+      //     description: error.payload.message,
+      //   });
+      // }
     }
 
     // const result = await fetch(

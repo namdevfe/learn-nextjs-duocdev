@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import authApiRequest from "@/apiRequest/auth";
 import { useRouter } from "next/navigation";
+import { handleErrorApi } from "@/lib/utils";
 
 const LoginForm = () => {
   const { toast } = useToast();
@@ -45,26 +46,27 @@ const LoginForm = () => {
       // Redirect to profile page
       router.push("/me");
     } catch (error: any) {
-      const errors = error.payload?.errors as {
-        field: string;
-        message: string;
-      }[];
+      handleErrorApi({ error, setError: form.setError, duration: 3000 });
+      // const errors = error.payload?.errors as {
+      //   field: string;
+      //   message: string;
+      // }[];
 
-      const status = error.status as number;
-      if (status === 422) {
-        errors.forEach((error) => {
-          form.setError(error.field as "email" | "password", {
-            type: "server",
-            message: error.message,
-          });
-        });
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Lỗi!",
-          description: error.payload?.message,
-        });
-      }
+      // const status = error.status as number;
+      // if (status === 422) {
+      //   errors.forEach((error) => {
+      //     form.setError(error.field as "email" | "password", {
+      //       type: "server",
+      //       message: error.message,
+      //     });
+      //   });
+      // } else {
+      //   toast({
+      //     variant: "destructive",
+      //     title: "Lỗi!",
+      //     description: error.payload?.message,
+      //   });
+      // }
     }
   }
 

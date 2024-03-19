@@ -1,3 +1,4 @@
+import ButtonLogout from "@/components/button-logout";
 import { ModeToggle } from "@/components/mode-toggle";
 import Link from "next/link";
 
@@ -15,6 +16,9 @@ const Header = () => {
             <Link href="/register" className="p-2 capitalize">
               Đăng ký
             </Link>
+          </li>
+          <li>
+            <ButtonLogout />
           </li>
         </ul>
         <ModeToggle />

@@ -41,11 +41,10 @@ const RegisterForm = () => {
   async function onSubmit(values: RegisterBodyType) {
     try {
       const res = await authApiRequest.register(values);
-
       if (res.status === 200) {
         // Notify
         toast({
-          description: "Register Succeed!",
+          description: res.payload.message,
         });
 
         await authApiRequest.auth({

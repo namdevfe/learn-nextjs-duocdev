@@ -2,11 +2,9 @@
 
 import { useEffect } from "react";
 import accountApiRequest from "@/apiRequest/account";
-import { clientSessionToken } from "@/lib/http";
 
 const Profile = () => {
   useEffect(() => {
-    console.log("🚀clientSessionToken---->", clientSessionToken.value);
     const fetchProfile = async () => {
       try {
         const profile = await accountApiRequest.meClient();
